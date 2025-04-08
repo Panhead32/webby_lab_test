@@ -1,0 +1,7 @@
+build
+node_modules
+pnpm-lock.json
+data/database.sqlite
+pnpm-lock.yaml
+.env
+.vscode

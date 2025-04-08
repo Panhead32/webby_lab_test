@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.ts",
+    "build": "tsc && cp -r src/public build/src/public",
+    "start": "node build/server.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.14.0",
+    "@types/validator": "^13.12.3",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "1.4.5-lts.2",
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7"
+  },
+  "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
+}

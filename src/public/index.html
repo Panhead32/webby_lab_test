@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Import Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Import Test</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="authToken">Authentication Token:</label>
+            <input type="text" id="authToken" name="authToken" placeholder="Enter your Bearer token">
+        </div>
+        <div class="form-group">
+            <label for="file">Select a text file to import:</label>
+            <input type="file" id="file" name="file" accept=".txt">
+        </div>
+        <button type="submit">Upload and Import</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const fileInput = document.getElementById('file');
+            const authToken = document.getElementById('authToken').value.trim();
+            
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to upload');
+                return;
+            }
+            
+            if (!authToken) {
+                alert('Please enter an authentication token');
+                return;
+            }
+            
+            formData.append('file', fileInput.files[0]);
+            
+            try {
+                const currentHost = window.location.host;
+                const response = await fetch(`http://${currentHost}/api/v1/movies/import`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = JSON.stringify(result, null, 2);
+                resultDiv.style.display = 'block';
+                
+                if (result.error) {
+                    alert(`Import failed: ${result.error}`);
+                } else {
+                    alert(`Successfully imported ${result.count} movies`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during import');
+            }
+        });
+    </script>
+</body>
+</html> 
